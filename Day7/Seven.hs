@@ -20,13 +20,13 @@ parseInput i = map read (splitOn "," i)
 
 partOne :: [Int] -> IO ()
 partOne l = do
-  putStrLn $ "Min fuel = " ++ show (minimum' $ fuelSpan l fuel)
-  return ()
+putStrLn $ "Min fuel = " ++ show (minimum' $ fuelSpan l fuel)
+return ()
 
 partTwo :: [Int] -> IO ()
 partTwo l = do
-  putStrLn $ "Min fuel 2 = " ++ show (minimum' $ fuelSpan l fuel2)
-  return ()
+putStrLn $ "Min fuel 2 = " ++ show (minimum' $ fuelSpan l fuel2)
+return ()
 
 
 fuelSpan :: [Int] -> ([Int] -> Int -> Int) -> [Int]
