@@ -1,11 +1,11 @@
-module Four where
+module Day4 where
 
 import           Data.List
 import           Data.List.Split
 
 main :: IO ()
 main = do
-  l <- lines <$> readFile "input.txt"
+  l <- lines <$> readFile "inputs/input4.txt"
   putStrLn $ "Part 1: " ++ show (calculate contained l)
   putStrLn $ "Part 2: " ++ show (calculate overlaps l)
   return ()

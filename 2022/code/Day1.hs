@@ -1,10 +1,10 @@
-module One where
+module Day1 where
 
 import           Data.List
 
 main :: IO ()
 main = do
-  content <- readFile "input.txt"
+  content <- readFile "inputs/input1.txt"
   let l  = lines content
   let il = parseToIntLists l []
   let mc = maxCalories il

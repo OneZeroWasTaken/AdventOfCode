@@ -1,10 +1,10 @@
-module Three where
+module Day3 where
 
 import           Data.Maybe
 
 main :: IO ()
 main = do
-  content <- readFile "input.txt"
+  content <- readFile "inputs/input3.txt"
   let l    = lines content
   let prio = sum $ map (priority . head . duplicates . half) l
   putStrLn $ "Part 1 priority: " ++ show prio

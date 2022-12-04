@@ -1,10 +1,10 @@
-module Two where
+module Day2 where
 
 import           Data.List
 
 main :: IO ()
 main = do
-  content <- readFile "input.txt"
+  content <- readFile "inputs/input2.txt"
   let score1 = calculate parseToRps content
   putStrLn $ "Part 1 score: " ++ show score1
   let score2 = calculate parseToRps2 content
