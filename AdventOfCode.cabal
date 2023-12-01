@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                AdventOfCode
-version:             0.22.0.0
+version:             0.23.0.0
 -- synopsis:
 -- description:
 license:             Apache-2.0
@@ -24,6 +24,7 @@ library
       split,
       containers
   hs-source-dirs:      ./2022/code
+                       ./2023/code
   default-language:    Haskell2010
 
 executable AdventOfCode
@@ -35,4 +36,5 @@ executable AdventOfCode
       split,
       containers
   hs-source-dirs:      ./2022/code
+                       ./2023/code
   default-language:    Haskell2010
