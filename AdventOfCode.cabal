@@ -24,6 +24,7 @@ library
     , split
     , containers
     , search-algorithms
+    , set-extra
   hs-source-dirs:      ./2023/code
                        ./2022/code
   default-language:    Haskell2010
@@ -37,6 +38,7 @@ executable AdventOfCode
     , split
     , containers
     , search-algorithms
+    , set-extra
   hs-source-dirs:      ./2023/code
                        ./2022/code
   default-language:    Haskell2010
