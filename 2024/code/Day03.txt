@@ -1,0 +1,7 @@
+Vim keystrokes (assumes input in clipboard)
+
+Part 1:
+"*pGo<C-c>gg/mul(\d\+,\d\+)<CR>qdggdndf("adex"bdeG$"=<C-r>a*<C-r>b<CR>pa+<C-c>q800@ddd$xV"ad"=<C-r>a<BS><CR>p
+
+Part 2:
+V"*pGodo<C-c>ggqn/don't<CR>d/do<CR>hq50@nGDgg/mul(\d\+,\d\+)<CR>800@ddd$xV"ad"=<C-r>a<BS><CR>p
