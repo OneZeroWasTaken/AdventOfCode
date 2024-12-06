@@ -6,6 +6,7 @@ import           Day01                         as D1
 import           Day02                         as D2
 import           Day04                         as D4
 import           Day05                         as D5
+import           Day06                         as D6
 
 -- Usage:
 -- > cabal run AdventOfCode2024 -- <day>
@@ -21,6 +22,7 @@ runDay args = do
     ["3"] -> putStrLn "Day 3 was done with Vim keystrokes"
     ["4"] -> D4.main
     ["5"] -> D5.main
+    ["6"] -> D6.main
     []    -> do
       putStrLn "Enter day to run"
       s <- getLine
