@@ -73,6 +73,7 @@ executable AdventOfCode2024
                     , containers
                     , search-algorithms
                     , set-extra
+                    , process
 
     -- Directories containing source files.
     hs-source-dirs:   code

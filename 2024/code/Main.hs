@@ -11,6 +11,7 @@ import Day07 as D7
 import Day08 as D8
 import Day09 as D9
 import System.Environment (getArgs)
+import System.Process (callCommand)
 
 -- Usage:
 -- > cabal run AdventOfCode2024 -- <day>
@@ -29,7 +30,7 @@ runDay args = do
     ["6"] -> D6.main
     ["7"] -> D7.main
     ["8"] -> D8.main
-    ["9"] -> D9.main
+    ["9"] -> D9.main >> callCommand "dotnet run --project code -- 9"
     [] -> do
       putStrLn "Enter day to run"
       s <- getLine
