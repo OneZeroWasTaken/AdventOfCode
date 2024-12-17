@@ -17,6 +17,7 @@ import Day13 as D13
 import Day14 as D14
 import Day15 as D15
 import Day16 as D16
+import Day17 as D17
 import System.Environment (getArgs)
 import System.Process (callCommand)
 
@@ -43,8 +44,9 @@ runDay args = do
     ["12"] -> D12.main
     ["13"] -> D13.main
     ["14"] -> D14.main
-    ["15"] -> D15.main
+    ["15"] -> D15.main >> callCommand "dotnet run --project code -- 15"
     ["16"] -> D16.main
+    ["17"] -> D17.main
     [] -> do
       putStrLn "Enter day to run"
       s <- getLine
