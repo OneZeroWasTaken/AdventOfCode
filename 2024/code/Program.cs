@@ -17,6 +17,9 @@ namespace AdventOfCode2024
                 case "9":
                     Day09Part2.Solve();
                     break;
+                case "15":
+                    Day15Part2.Solve();
+                    break;
                 default:
                     Console.WriteLine("Day not implemented or unknown argument");
                     break;
