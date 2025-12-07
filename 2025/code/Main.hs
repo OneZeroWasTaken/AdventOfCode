@@ -5,6 +5,8 @@ import Day02 as D2
 import Day03 as D3
 import Day04 as D4
 import Day05 as D5
+import Day06 as D6
+import Day07 as D7
 import System.Environment (getArgs)
 import System.Process (callCommand)
 
@@ -22,6 +24,8 @@ runDay args = do
     ["3"] -> D3.main
     ["4"] -> D4.main
     ["5"] -> D5.main
+    ["6"] -> D6.main
+    ["7"] -> D7.main
     [] -> do
       putStrLn "Enter day to run"
       s <- getLine
