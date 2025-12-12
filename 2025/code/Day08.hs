@@ -2,41 +2,40 @@ module Day08 where
 
 import Data.List
 import Data.List.Split
+import Data.Maybe
+import Data.Tree
+import qualified Data.Graph as G
+
+type Vertex = (Int, Int, Int)
+type Edge = (Vertex, Vertex)
 
 main :: IO ()
 main = do
   ss <- lines <$> readFile "inputs/input08.txt"
 
-  let ps = map parse ss
-  let es = map (\(_, p1, p2) -> (p1, p2)) (take 1000 $ edges ps)
-  let vs = allV es 
-  putStrLn $ "Part 1: " ++ show (sort $ map length $ map (\p -> flood es [p]) vs)
-  putStrLn $ "Part 2: " ++ show ()
+  let vertices = map parse ss
+      edges = edgesSorted vertices
+      g = graph vertices (take 1000 edges)
+      ((x1, _, _), (x2, _, _)) = finalEdge vertices edges
+  putStrLn $ "Part 1: " ++ show (product . take 3 . reverse . sort . map (length . flatten) . G.components $ g)
+  putStrLn $ "Part 2: " ++ show (x1 * x2)
 
-allV :: [((Int, Int, Int), (Int, Int, Int))] -> [(Int, Int, Int)]
-allV es = nub $ map fst es ++ map snd es
+finalEdge :: [Vertex] -> [Edge] -> Edge
+finalEdge vs es = head $ reverse $ head $ filter (\es' -> components vs es' == 1) (inits es)
 
-flood :: [((Int, Int, Int), (Int, Int, Int))] -> [(Int, Int, Int)] -> [(Int, Int, Int)]
-flood es vs | all (`elem` vs) con = vs
-            | otherwise = nub $concatMap (\p -> flood es (p:vs)) next
+components :: [Vertex] -> [Edge] -> Int
+components vs = length . map flatten . G.components . graph vs
+
+graph :: [Vertex] -> [Edge] -> G.Graph
+graph vs es = G.buildG (0, length vs - 1) [(i, j) | (p1, p2) <- es, let i = fromJust (elemIndex p1 vs), let j = fromJust (elemIndex p2 vs)]
+
+edgesSorted :: [Vertex] -> [Edge]
+edgesSorted vs = map (\(_, p1, p2) -> (p1, p2)) $ nub $ sort allEdges
   where
-    f = head vs
-    con = nub $ map snd (filter ((== f) . fst) es) ++ map fst (filter ((== f) . snd) es)
-    next = filter (`notElem` vs) con
+    allEdges = [(dist p1 p2, head (sort [p1, p2]), last (sort [p1, p2])) | p1 <- vs, p2 <- vs, p1 /= p2]
 
-circuits :: [((Int, Int, Int), (Int, Int, Int))] -> (Int, Int, Int) -> [(Int, Int, Int)]
-circuits [] jb = [jb]
-circuits ((v1, v2):es) jb = undefined
-
-edges :: [(Int, Int, Int)] -> [(Int, (Int, Int, Int), (Int, Int, Int))]
-edges ps =
-  nub $
-    filter (\(d, _, _) -> d > 0) $
-      sort
-        [(dist p1 p2, head (sort [p1, p2]), last (sort [p1, p2])) | p1 <- ps, p2 <- ps]
-
-dist :: (Int, Int, Int) -> (Int, Int, Int) -> Int
+dist :: Vertex -> Vertex -> Int
 dist (x1, y1, z1) (x2, y2, z2) = (x1 - x2) ^ 2 + (y1 - y2) ^ 2 + (z1 - z2) ^ 2
 
-parse :: String -> (Int, Int, Int)
+parse :: String -> Vertex
 parse s = let [a, b, c] = map read (splitOn "," s) in (a, b, c)
