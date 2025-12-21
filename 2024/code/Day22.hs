@@ -9,6 +9,11 @@ main = do
   putStrLn $ "Part 1: " ++ show (sum $ map ((!! 2000) . iterate secret) is)
   putStrLn $ "Part 2: " ++ show ()
 
+changes :: Int -> Int -> [Int]
+changes 0 _ = []
+changes n s = ns `mod` 10 - s `mod` 10 : changes (n - 1) ns
+  where ns = secret s
+
 secret :: Int -> Int
 secret s = prune $ mix (n2 * 2048) n2
  where

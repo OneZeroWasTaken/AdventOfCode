@@ -1,8 +1,11 @@
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 module Day16 where
 
 import           Algorithm.Search
 import           Data.List
 import           Data.Maybe
+import           Data.Map                       ( Map )
+import qualified Data.Map                      as M
 
 data State = State (Int, Int) Dir
   deriving (Show, Ord, Eq)
@@ -16,29 +19,28 @@ main = do
   let ps    = path ss
   let part1 = fst $ fromJust $ dijk ss ps
 
-  --putStrLn $ "Part 1: " ++ show part1
-  putStrLn $ "Part 2: " ++ show (solve ss ps)
-
-solve :: [String] -> [(Int, Int)] -> [([(Int, Int)], [[(Int, Int)]])]
-solve ss ps = tries
- where
-  (goal, sts)   = fromJust $ dijk ss ps
-  path          = nub $ map (\(State p _) -> p) sts
-  intersections = filter ((> 2) . length . filter (`elem` ps) . neighbors) path
-  afterInts     = afterIntersection path
-  tries         = map (\p -> tryRemoved (delete p path)) afterInts
-  afterIntersection :: [(Int, Int)] -> [(Int, Int)]
-  afterIntersection (q : w : es)
-    | q `elem` intersections = w : afterIntersection es
-    | otherwise              = afterIntersection (w : es)
-  afterIntersection e = e
-  tryRemoved :: [(Int, Int)] -> ([(Int, Int)], [[(Int, Int)]])
-  tryRemoved rs = (path \\ rs, map extPos a)
-   where
-    a = filter ((== goal) . fst) $ mapMaybe (\p -> dijk ss (delete p ps)) rs
+  putStrLn $ "Part 1: " ++ show part1
+  --let my = myDijk ps (M.fromList [(start ss, 0)]) [start ss]
+  --putStrLn $ "Part 2: " ++ show (map (`M.lookup` my) $ end ss)
 
 extPos :: (Int, [State]) -> [(Int, Int)]
 extPos (_, sts) = map (\(State p _) -> p) sts
+
+myDijk :: [(Int, Int)] -> Map State Int -> [State] -> Map State Int
+myDijk _  m []       = m
+myDijk ps m (c : rs) = myDijk ps nm (rs ++ ncs)
+ where
+  ns  = neighborStates ps c
+  ncs = filter (\e -> isNothing $ M.lookup e m) ns
+  cc  = fromJust $ M.lookup c m
+  nm  = foldr
+    (\s m' -> case M.lookup s m' of
+      Nothing -> M.insert s (cc + cost c s) m'
+      Just ct ->
+        if cc + cost c s < ct then M.insert s (cc + cost c s) m' else m'
+    )
+    m
+    ns
 
 dijk :: [String] -> [(Int, Int)] -> Maybe (Int, [State])
 dijk ss ps = dijkstra (neighborStates ps) cost (isEnd $ end ss) (start ss)

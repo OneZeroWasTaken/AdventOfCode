@@ -13,7 +13,24 @@ main = do
   l <- lines <$> readFile "inputs/input24.txt"
 
   putStrLn $ "Part 1: " ++ show (binary $ map eval $ parse l z)
-  putStrLn $ "Part 2: " ++ show ()
+  putStrLn $ "Part 2: " ++ show
+    (toBin $ binary $ map eval $ parse (addCustomXY l) z)
+
+x, y :: String
+x = reverse "10000000000000000000000000000000000000000001"
+y = reverse "00000000000000000000000000000000000000000001"
+
+toBin :: Int -> String
+toBin 0 = ""
+toBin n | n `mod` 2 == 1 = toBin (n `div` 2) ++ "1"
+        | otherwise      = toBin (n `div` 2) ++ "0"
+
+addCustomXY :: [String] -> [String]
+addCustomXY s' = f s' (x ++ y)
+ where
+  f :: [String] -> String -> [String]
+  f s        []       = s
+  f (s : ss) (d : ds) = (s ++ [d]) : f ss ds
 
 z :: [String]
 z =
